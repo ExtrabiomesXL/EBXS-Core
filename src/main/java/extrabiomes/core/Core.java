@@ -14,11 +14,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import extrabiomes.lib.Const;
+import extrabiomes.lib.IEBXSMod;
 
 import java.io.File;
 
 @Mod(modid = Version.MOD_ID, name = Version.MOD_NAME, version = Version.VERSION, dependencies = "")
-public class Core
+public class Core implements IEBXSMod
 {
     static final Minecraft MC = Minecraft.getMinecraft();
     
@@ -30,6 +31,10 @@ public class Core
 
     static File          BaseDir;
     static Configuration Config;
+    
+    public Logger log() {
+    	return LOGGER;
+    }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
