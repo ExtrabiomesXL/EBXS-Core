@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Configuration;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,11 +27,11 @@ public class Core
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        BaseDir = new File(event.getModConfigurationDirectory(), Version.MOD_ID);
-        Config  = new Configuration( event.getSuggestedConfigurationFile() );
-
+        BaseDir = new File(event.getModConfigurationDirectory(), Version.PREFIX_LONG);
         if ( !BaseDir.exists() )
             BaseDir.mkdir();
+
+        Config  = new Configuration( new File(BaseDir, getClass().getSimpleName().toLowerCase() + ".cfg") );
     }
 
     @EventHandler
