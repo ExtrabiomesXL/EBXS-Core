@@ -13,6 +13,8 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import extrabiomes.lib.Const;
+
 import java.io.File;
 
 @Mod(modid = Version.MOD_ID, name = Version.MOD_NAME, version = Version.VERSION, dependencies = "")
@@ -32,11 +34,13 @@ public class Core
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        BaseDir = new File(event.getModConfigurationDirectory(), Version.PREFIX_LONG);
+        BaseDir = new File(event.getModConfigurationDirectory(), Const.PREFIX_LONG);
         if ( !BaseDir.exists() )
             BaseDir.mkdir();
 
         Config  = new Configuration( new File(BaseDir, getClass().getSimpleName().toLowerCase() + ".cfg") );
+        
+        // set up biome utils
     }
 
     @EventHandler
