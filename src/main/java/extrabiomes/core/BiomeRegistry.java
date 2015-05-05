@@ -16,6 +16,7 @@ public enum BiomeRegistry {
 	}
 	
 	public static boolean register(IEBXSMod mod) {
+		Core.LOGGER.info("Got registration request from "+mod.getClass().getSimpleName());
 		return INSTANCE.mods.add(mod);
 	}
 }
