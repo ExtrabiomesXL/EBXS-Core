@@ -4,6 +4,8 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 import com.google.common.base.Optional;
 
+import extrabiomes.lib.event.*;
+
 public abstract class BiomeUtils {
 	
 	// create a new instance of the biome class specified in the settings object
@@ -16,6 +18,6 @@ public abstract class BiomeUtils {
 	
 	// register a child mod
 	public static void register(IEBXSMod mod) {
-		
+		EBXSBus.raise(new RegisterEvent(mod));
 	}
 }

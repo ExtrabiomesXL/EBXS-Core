@@ -15,11 +15,15 @@ import org.apache.logging.log4j.Logger;
 
 import extrabiomes.lib.Const;
 import extrabiomes.lib.IEBXSMod;
+import extrabiomes.lib.event.EBXSBus;
+import extrabiomes.lib.event.EBXSEvent;
+import extrabiomes.lib.event.IEBXSHandler;
+import extrabiomes.lib.event.RegisterEvent;
 
 import java.io.File;
 
 @Mod(modid = Version.MOD_ID, name = Version.MOD_NAME, version = Version.VERSION, dependencies = "")
-public class Core implements IEBXSMod
+public class Core
 {
     static final Minecraft MC = Minecraft.getMinecraft();
     
@@ -32,10 +36,6 @@ public class Core implements IEBXSMod
     static File          BaseDir;
     static Configuration Config;
     
-    public Logger log() {
-    	return LOGGER;
-    }
-
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -45,7 +45,7 @@ public class Core implements IEBXSMod
 
         Config  = new Configuration( new File(BaseDir, getClass().getSimpleName().toLowerCase() + ".cfg") );
         
-        // set up biome utils
+        EBXSBus.INSTANCE.init(new Handler());
     }
 
     @EventHandler
@@ -64,4 +64,23 @@ public class Core implements IEBXSMod
     {
 
     }
+    
+    // Wrapper for EBXS Event handling
+    private class Handler implements IEBXSHandler {
+	    public Logger log() {
+	    	return LOGGER;
+	    }
+	    
+	    // Semi-terrible stub handler implementation for now
+	    public void receive(EBXSEvent event) {
+	    	switch( event.type ) {
+	    		case "register":
+	    			BiomeRegistry.register((IEBXSMod)event.data);
+	    			break;
+	    		default:
+	    			log().warn("Got unsupported event of type "+event.type);
+	    	}
+	    }
+    }
+
 }
