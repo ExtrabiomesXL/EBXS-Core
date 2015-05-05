@@ -2,10 +2,12 @@ package extrabiomes.core;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,10 +15,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-@Mod(modid = Version.MOD_ID, version = Version.VERSION)
+@Mod(modid = Version.MOD_ID, name = Version.MOD_NAME, version = Version.VERSION, dependencies = "")
 public class Core
 {
     static final Minecraft MC = Minecraft.getMinecraft();
+    
+    @Instance(Version.MOD_ID)
+    public static Core instance;
 
     static final Logger  LOGGER  = LogManager.getFormatterLogger(Version.MOD_ID);
     static final Boolean DEV     = Boolean.parseBoolean( System.getProperty("development", "false") );
