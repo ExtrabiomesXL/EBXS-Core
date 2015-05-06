@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import com.google.common.collect.Sets;
 
+import extrabiomes.lib.Const;
 import extrabiomes.lib.IEBXSMod;
 
 public enum BiomeRegistry {
@@ -15,8 +16,13 @@ public enum BiomeRegistry {
 		mods = Sets.newHashSet();
 	}
 	
-	public static boolean register(IEBXSMod mod) {
-		Core.LOGGER.info("Got registration request from "+mod.getClass().getSimpleName());
+	public static boolean register(IEBXSMod mod, String apiVersion) {
+		final String modName = mod.getClass().getSimpleName();
+		Core.LOGGER.info("Got registration request from %s.", modName);
+		if( !apiVersion.equals(Const.API_VERSION) ) {
+			Core.LOGGER.warn("-- %s is running mismatched EBXS api version %s (%s expected)",
+					modName, apiVersion, Const.API_VERSION);
+		}
 		return INSTANCE.mods.add(mod);
 	}
 }

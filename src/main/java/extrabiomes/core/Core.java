@@ -46,15 +46,20 @@ public class Core
         Config  = new Configuration( new File(BaseDir, getClass().getSimpleName().toLowerCase() + ".cfg") );
         
         EBXSBus.INSTANCE.init(new Handler());
+        
+        /// BiomeHandler.init();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        // Need events? Uncomment these:
+    	// TODO: register vanilla event handler
         //MinecraftForge.EVENT_BUS.register(this);
         //FMLCommonHandler.instance().bus().register(this);
         //LOGGER.debug("Registered events");
+    	
+    	/// BiomeHandler.registerWorldGenerators();
+    	/// BiomeHandler.enableBiomes();
 
         LOGGER.info("Loaded version %s", Version.VERSION);
     }
@@ -62,7 +67,8 @@ public class Core
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-
+    	// TODO: activate plugins
+    	// TODO: initialize recipes
     }
     
     // Wrapper for EBXS Event handling
@@ -75,7 +81,7 @@ public class Core
 	    public void receive(EBXSEvent event) {
 	    	switch( event.type ) {
 	    		case "register":
-	    			BiomeRegistry.register((IEBXSMod)event.data);
+	    			BiomeRegistry.register((IEBXSMod)event.data, ((RegisterEvent)event).apiVersion);
 	    			break;
 	    		default:
 	    			log().warn("Got unsupported event of type "+event.type);

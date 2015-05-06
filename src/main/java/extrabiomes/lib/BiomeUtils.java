@@ -17,7 +17,7 @@ public abstract class BiomeUtils {
 	}
 	
 	// register a child mod
-	public static void register(IEBXSMod mod) {
-		EBXSBus.raise(new RegisterEvent(mod));
+	public static void register(IEBXSMod mod, String apiVersion) {
+		EBXSBus.raise(new RegisterEvent(mod, apiVersion));
 	}
 }
