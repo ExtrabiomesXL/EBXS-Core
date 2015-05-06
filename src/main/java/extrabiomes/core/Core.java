@@ -41,9 +41,7 @@ public class Core extends ModBase
     {
     	basePreInit(event);
         EBXSBus.INSTANCE.init(new Handler());
-        
-        /// BiomeHandler.init();
-        
+                
         Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
         while( mods.hasNext() ) {
         	mods.next().ebxsPreInit();
@@ -57,9 +55,15 @@ public class Core extends ModBase
         //MinecraftForge.EVENT_BUS.register(this);
         //FMLCommonHandler.instance().bus().register(this);
         //LOGGER.debug("Registered events");
-    	
-    	BiomeHandler.registerWorldGenerators();
-    	BiomeHandler.enableBiomes();
+    
+    	// spin up our biome handler
+        try {
+			BiomeHandler.init();
+	    	BiomeHandler.registerWorldGenerators();
+	    	BiomeHandler.enableBiomes();
+		} catch (Exception e) {
+			LOGGER.catching(e);
+		}
 
         LOGGER.info("Loaded version %s", Version.VERSION);
         
@@ -78,6 +82,11 @@ public class Core extends ModBase
         Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
         while( mods.hasNext() ) {
         	mods.next().ebxsPostInit();
+        }
+        
+        if( DEV ) {
+	        // dump the full list of registered biomes for debug purposes
+	        BiomeRegistry.dump();
         }
     }
     

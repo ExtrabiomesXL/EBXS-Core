@@ -81,4 +81,16 @@ public enum BiomeRegistry {
 		
 		throw new RuntimeException("No more Biome ID's available.");
 	}
+	
+	public static void dump() {
+		Core.LOGGER.info(":: beginning biome dump ::");
+		for( BiomeGenBase biome : BiomeGenBase.getBiomeGenArray() ) {
+			if( biome == null ) continue;
+			if( INSTANCE.configBiomes[biome.biomeID] )
+				Core.LOGGER.info("<%3d>  %s", biome.biomeID, biome.biomeName);
+			else
+				Core.LOGGER.info(" %3d - %s", biome.biomeID, biome.biomeName);
+		}
+		Core.LOGGER.info(":: end of biome dump ::");
+	}
 }

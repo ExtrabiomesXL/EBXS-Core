@@ -28,7 +28,7 @@ public abstract class BiomeUtils {
 								settings.toString()
 						));
 			}
-			final Optional<?extends BiomeGenBase> biome = Optional.of(settings.getBiomeClass().get().newInstance());
+			final Optional<?extends ExtrabiomeGenBase> biome = Optional.of(settings.getBiomeClass().get().newInstance());
 			settings.setBiome(biome);
 		}
 	}

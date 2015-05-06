@@ -21,8 +21,8 @@ public class BiomeSettings {
 	private boolean allowSpawn = true;
 	private boolean allowStronghold = true;
 	
-	private final Optional<? extends Class<? extends BiomeGenBase>> biomeClass;
-	private Optional<? extends BiomeGenBase> biome = Optional.absent();
+	private final Optional<? extends Class<? extends ExtrabiomeGenBase>> biomeClass;
+	private Optional<? extends ExtrabiomeGenBase> biome = Optional.absent();
 	
 	public enum Weights {
 		NONE(0), LIGHT(5), NORMAL(10), HEAVY(20);
@@ -34,7 +34,7 @@ public class BiomeSettings {
 		}
 	}
 	
-	public BiomeSettings(String name, int defaultID, Class<? extends BiomeGenBase> biomeClass) {
+	public BiomeSettings(String name, int defaultID, Class<? extends ExtrabiomeGenBase> biomeClass) {
 		this.name = name;
 		this.defaultID = defaultID;
 		this.biomeID = this.defaultID;
@@ -46,14 +46,14 @@ public class BiomeSettings {
 		return name;
 	}
 	
-	public Optional<? extends Class<? extends BiomeGenBase>> getBiomeClass() {
+	public Optional<? extends Class<? extends ExtrabiomeGenBase>> getBiomeClass() {
 		return biomeClass;
 	}
 
-	public Optional<? extends BiomeGenBase> getBiome() {
+	public Optional<? extends ExtrabiomeGenBase> getBiome() {
 		return biome;
 	}
-	public void setBiome(Optional<? extends BiomeGenBase> biome) {
+	public void setBiome(Optional<? extends ExtrabiomeGenBase> biome) {
 		this.biome = biome;
 	}
 

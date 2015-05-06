@@ -14,6 +14,7 @@ import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import extrabiomes.lib.BiomeSettings;
 import extrabiomes.lib.BiomeUtils;
+import extrabiomes.lib.ExtrabiomeGenBase;
 import extrabiomes.lib.IEBXSMod;
 
 public enum BiomeHandler {
@@ -40,11 +41,10 @@ public enum BiomeHandler {
 	
 	// final cleanup on a biome once it is loaded
 	public static void postLoad(BiomeSettings settings) {
-		BiomeGenBase biome = settings.getBiome().get();
+		ExtrabiomeGenBase biome = settings.getBiome().get();
 		
 		Core.LOGGER.debug("Registering %s with dictionary.", settings);
-		// TODO: add biome type flags to this register call
-		BiomeDictionary.registerBiomeType(biome);
+		BiomeDictionary.registerBiomeType(biome, biome.getTypeFlags());
 		
 		// now add ourselves to the biome manager
 		BiomeManager.BiomeEntry entry = new BiomeManager.BiomeEntry(biome, settings.getWeight());
