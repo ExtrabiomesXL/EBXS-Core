@@ -27,7 +27,7 @@ public enum BiomeRegistry {
 		return INSTANCE.mods.add(mod);
 	}
 	
-	public Iterator<IEBXSMod> iterator() {
-		return mods.iterator();
+	public static Iterator<IEBXSMod> iterator() {
+		return INSTANCE.mods.iterator();
 	}
 }

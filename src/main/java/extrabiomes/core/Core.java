@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import extrabiomes.lib.Const;
 import extrabiomes.lib.IEBXSMod;
+import extrabiomes.lib.ModBase;
 import extrabiomes.lib.event.EBXSBus;
 import extrabiomes.lib.event.EBXSEvent;
 import extrabiomes.lib.event.IEBXSHandler;
@@ -24,33 +25,26 @@ import java.io.File;
 import java.util.Iterator;
 
 @Mod(modid = Version.MOD_ID, name = Version.MOD_NAME, version = Version.VERSION, dependencies = "")
-public class Core
+public class Core extends ModBase
 {
-    static final Minecraft MC = Minecraft.getMinecraft();
-    
-    @Instance(Version.MOD_ID)
+    public Core() {
+		super(Version.MOD_ID);
+	}
+
+	@Instance(Version.MOD_ID)
     public static Core instance;
 
     static final Logger  LOGGER  = LogManager.getFormatterLogger(Version.MOD_ID);
-    static final Boolean DEV     = Boolean.parseBoolean( System.getProperty("development", "false") );
-
-    static File          BaseDir;
-    static Configuration Config;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        BaseDir = new File(event.getModConfigurationDirectory(), Const.PREFIX_LONG);
-        if ( !BaseDir.exists() )
-            BaseDir.mkdir();
-
-        Config  = new Configuration( new File(BaseDir, getClass().getSimpleName().toLowerCase() + ".cfg") );
-        
+    	basePreInit(event);
         EBXSBus.INSTANCE.init(new Handler());
         
         /// BiomeHandler.init();
         
-        Iterator<IEBXSMod> mods = BiomeRegistry.INSTANCE.iterator();
+        Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
         while( mods.hasNext() ) {
         	mods.next().ebxsPreInit();
         }
@@ -69,7 +63,7 @@ public class Core
 
         LOGGER.info("Loaded version %s", Version.VERSION);
         
-        Iterator<IEBXSMod> mods = BiomeRegistry.INSTANCE.iterator();
+        Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
         while( mods.hasNext() ) {
         	mods.next().ebxsInit();
         }
@@ -81,7 +75,7 @@ public class Core
     	// TODO: activate plugins
     	// TODO: initialize recipes
     	
-        Iterator<IEBXSMod> mods = BiomeRegistry.INSTANCE.iterator();
+        Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
         while( mods.hasNext() ) {
         	mods.next().ebxsPostInit();
         }
