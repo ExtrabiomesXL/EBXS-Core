@@ -58,8 +58,8 @@ public class Core extends ModBase
         //FMLCommonHandler.instance().bus().register(this);
         //LOGGER.debug("Registered events");
     	
-    	/// BiomeHandler.registerWorldGenerators();
-    	/// BiomeHandler.enableBiomes();
+    	BiomeHandler.registerWorldGenerators();
+    	BiomeHandler.enableBiomes();
 
         LOGGER.info("Loaded version %s", Version.VERSION);
         
@@ -72,7 +72,7 @@ public class Core extends ModBase
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-    	// TODO: activate plugins
+    	// TODO: initialize plugins
     	// TODO: initialize recipes
     	
         Iterator<IEBXSMod> mods = BiomeRegistry.iterator();

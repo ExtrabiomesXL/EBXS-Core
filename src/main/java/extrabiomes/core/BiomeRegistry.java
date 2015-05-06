@@ -2,9 +2,15 @@ package extrabiomes.core;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
+import net.minecraft.world.WorldType;
+import net.minecraft.world.biome.BiomeGenBase;
+
+import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 
+import cpw.mods.fml.common.IWorldGenerator;
 import extrabiomes.lib.Const;
 import extrabiomes.lib.IEBXSMod;
 
@@ -29,5 +35,15 @@ public enum BiomeRegistry {
 	
 	public static Iterator<IEBXSMod> iterator() {
 		return INSTANCE.mods.iterator();
+	}
+
+	public static void addBiome(Set<WorldType> worldTypes, BiomeGenBase biome) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void addWorldGenerator(IWorldGenerator generator) {
+		// TODO Auto-generated method stub
+		
 	}
 }

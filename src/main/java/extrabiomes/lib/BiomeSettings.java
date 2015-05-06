@@ -13,6 +13,8 @@ public class BiomeSettings {
 	private int weight = Weights.NORMAL.value;
 	private boolean enabled = true;
 	private boolean allowVillages = true;
+	private boolean allowSpawn = true;
+	private boolean allowStronghold = true;
 	
 	private final Optional<? extends Class<? extends BiomeGenBase>> biomeClass;
 	private Optional<? extends BiomeGenBase> biome = Optional.absent();
@@ -35,6 +37,7 @@ public class BiomeSettings {
 
 	@Override
 	public String toString() {
+		// TODO: embed a sensible name
 		return super.toString().toLowerCase(Locale.ENGLISH);
 	}
 	
@@ -59,5 +62,13 @@ public class BiomeSettings {
 
 	public boolean allowVillages() {
 		return allowVillages;
+	}
+
+	public boolean allowSpawn() {
+		return allowSpawn;
+	}
+	
+	public boolean allowStronghold() {
+		return allowStronghold;
 	}
 }
