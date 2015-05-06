@@ -48,18 +48,17 @@ public enum BiomeHandler {
 		
 		// now add ourselves to the biome manager
 		BiomeManager.BiomeEntry entry = new BiomeManager.BiomeEntry(biome, settings.getWeight());
+		Core.LOGGER.info("BiomeEntry: %s, weight: %d, temp: %f, rain: %f", biome.biomeName, entry.itemWeight, biome.temperature, biome.rainfall);
 		if( biome.temperature > 0.5f ) {
-			if( biome.isHighHumidity() ) {
-				BiomeManager.addBiome(BiomeType.WARM, entry);
-			} else {
+			if( biome.rainfall < 0.25f ) {
 				BiomeManager.addBiome(BiomeType.DESERT, entry);
-			}
-		} else {
-			if( biome.getEnableSnow() ) {
-				BiomeManager.addBiome(BiomeType.ICY, entry);
 			} else {
-				BiomeManager.addBiome(BiomeType.COOL, entry);
+				BiomeManager.addBiome(BiomeType.WARM, entry);
 			}
+		} else if( biome.temperature > 0.25 ) {
+			BiomeManager.addBiome(BiomeType.COOL, entry);
+		} else {
+			BiomeManager.addBiome(BiomeType.ICY, entry);
 		}
 	}
 
@@ -73,7 +72,6 @@ public enum BiomeHandler {
 				final Optional<? extends BiomeGenBase> biomeOpt = settings.getBiome();
 				if( settings.isEnabled() && biomeOpt.isPresent() ) {
 					final BiomeGenBase biome = biomeOpt.get();
-					BiomeRegistry.addBiome(worldTypes, biome);
 					if( settings.allowSpawn() )
 						BiomeManager.addSpawnBiome(biome);
 					if( settings.allowStronghold() )

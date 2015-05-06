@@ -41,11 +41,6 @@ public enum BiomeRegistry {
 		return INSTANCE.mods.iterator();
 	}
 
-	public static void addBiome(Set<WorldType> worldTypes, BiomeGenBase biome) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public static void addWorldGenerator(IWorldGenerator generator) {
 		// TODO Auto-generated method stub
 		
