@@ -9,7 +9,9 @@ import com.google.common.base.Optional;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 import extrabiomes.lib.BiomeSettings;
 import extrabiomes.lib.BiomeUtils;
 import extrabiomes.lib.IEBXSMod;
@@ -17,24 +19,51 @@ import extrabiomes.lib.IEBXSMod;
 public enum BiomeHandler {
 	INSTANCE;
 	
-	public static void registerWorldGenerators() {
+	public static void init() throws Exception {
 		Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
 		while( mods.hasNext() ) {
-			final List<Class <?extends IWorldGenerator>> generators = mods.next().getWorldGenerators();
-			for( final Class<?extends IWorldGenerator> clazz : generators ) {
-				try {
-					final IWorldGenerator generator = clazz.newInstance();
-					BiomeRegistry.addWorldGenerator( generator );
-				} catch (InstantiationException | IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			final List<BiomeSettings> settingsList = mods.next().getBiomeSettings();
+			for( final BiomeSettings settings : settingsList ) {
+				if( settings.isEnabled() && settings.getID() > 0 ) {
+					BiomeUtils.createBiome(settings);
+					if( settings.getBiome().isPresent() ) {
+						postLoad(settings);
+					} else {
+						Core.LOGGER.warn("Unable to create biome class for %s.", settings);
+					}
 				}
 			}
 		}
 		
-		// TODO: register any worldgen defined in Core
+		// TODO: fire api event to announce biome handler initialization
 	}
 	
+	// final cleanup on a biome once it is loaded
+	public static void postLoad(BiomeSettings settings) {
+		BiomeGenBase biome = settings.getBiome().get();
+		
+		Core.LOGGER.debug("Registering %s with dictionary.", settings);
+		// TODO: add biome type flags to this register call
+		BiomeDictionary.registerBiomeType(biome);
+		
+		// now add ourselves to the biome manager
+		BiomeManager.BiomeEntry entry = new BiomeManager.BiomeEntry(biome, settings.getWeight());
+		if( biome.temperature > 0.5f ) {
+			if( biome.isHighHumidity() ) {
+				BiomeManager.addBiome(BiomeType.WARM, entry);
+			} else {
+				BiomeManager.addBiome(BiomeType.DESERT, entry);
+			}
+		} else {
+			if( biome.getEnableSnow() ) {
+				BiomeManager.addBiome(BiomeType.ICY, entry);
+			} else {
+				BiomeManager.addBiome(BiomeType.COOL, entry);
+			}
+		}
+	}
+
+	// enable the biomes for generation now that they are created
 	public static void enableBiomes() {
 		final Set<WorldType> worldTypes = BiomeUtils.discoverWorldTypes();
 		Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
@@ -52,7 +81,7 @@ public enum BiomeHandler {
 					if( settings.allowVillages() )
 						BiomeManager.addVillageBiome(biome, true);
 				} else {
-					Core.LOGGER.debug("Biome %s disabled.", settings.toString());
+					Core.LOGGER.debug("Biome %s disabled.", settings);
 				}
 			}
 		}
@@ -64,5 +93,22 @@ public enum BiomeHandler {
 		}
 		*/
 	}
-	
+		
+	public static void registerWorldGenerators() {
+		Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
+		while( mods.hasNext() ) {
+			final List<Class <?extends IWorldGenerator>> generators = mods.next().getWorldGenerators();
+			for( final Class<?extends IWorldGenerator> clazz : generators ) {
+				try {
+					final IWorldGenerator generator = clazz.newInstance();
+					BiomeRegistry.addWorldGenerator( generator );
+				} catch (InstantiationException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		// TODO: register any worldgen defined in Core
+	}
 }

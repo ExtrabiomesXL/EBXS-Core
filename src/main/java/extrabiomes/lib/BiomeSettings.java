@@ -4,9 +4,14 @@ import java.util.Locale;
 
 import com.google.common.base.Optional;
 
+import extrabiomes.lib.event.EBXSBus;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public class BiomeSettings {
+	public final String name;
+	
 	private final int defaultID;
 
 	private int biomeID = 0;
@@ -29,7 +34,8 @@ public class BiomeSettings {
 		}
 	}
 	
-	public BiomeSettings(int defaultID, Class<? extends BiomeGenBase> biomeClass) {
+	public BiomeSettings(String name, int defaultID, Class<? extends BiomeGenBase> biomeClass) {
+		this.name = name;
 		this.defaultID = defaultID;
 		this.biomeID = this.defaultID;
 		this.biomeClass = Optional.fromNullable(biomeClass);
@@ -37,8 +43,7 @@ public class BiomeSettings {
 
 	@Override
 	public String toString() {
-		// TODO: embed a sensible name
-		return super.toString().toLowerCase(Locale.ENGLISH);
+		return name;
 	}
 	
 	public Optional<? extends Class<? extends BiomeGenBase>> getBiomeClass() {
@@ -55,6 +60,10 @@ public class BiomeSettings {
 	public int getID() {
 		return biomeID;
 	}
+	
+	public int getWeight() {
+		return weight;
+	}
 
 	public boolean isEnabled() {
 		return enabled;
@@ -70,5 +79,59 @@ public class BiomeSettings {
 	
 	public boolean allowStronghold() {
 		return allowStronghold;
+	}
+
+	////////// ----------------------------------------------------- //////////
+	
+	private String keyPrefix() {
+		// we may wind up with separate prefixes eventually
+		return name;
+	}
+	private String keyID() {
+		return keyPrefix() + ".id";
+	}
+	private String keyEnabled() {
+		return keyPrefix() + ".enabled";
+	}
+	private String keyWeight() {
+		return keyPrefix() + ".weight";
+	}
+	private String keyAllowVillages() {
+		return keyPrefix() + ".allow_villages";
+	}
+	private String keyAllowSpawn() {
+		return keyPrefix() + ".allow_spawn";
+	}
+	private String keyAllowStronghold() {
+		return keyPrefix() + ".allow_stronghold";
+	}
+	
+	// populate this settings object from the config file
+	public void load(Configuration config) {
+		Property property;
+		
+		property = config.get(Const.CATEGORY_BIOME, keyEnabled(), enabled);
+		enabled = property.getBoolean(false);
+		
+		if( enabled ) {
+			property = config.get(Const.CATEGORY_BIOME, keyID(), defaultID);
+			biomeID = EBXSBus.queryInt(EBXSBus.QUERY_BIOME_ID, Integer.valueOf(property.getInt()));
+			if( biomeID != defaultID ) {
+				property.comment = "ID changed to avoid conflict (was "+property.getInt()+")";
+				property.set(biomeID);
+			}
+			
+			property = config.get(Const.CATEGORY_BIOME, keyWeight(), weight);
+			weight = property.getInt(Weights.NONE.value);
+			
+			property = config.get(Const.CATEGORY_BIOME, keyAllowVillages(), allowVillages);
+			allowVillages = property.getBoolean(false);
+			
+			property = config.get(Const.CATEGORY_BIOME, keyAllowSpawn(), allowSpawn);
+			allowSpawn = property.getBoolean(false);
+			
+			property = config.get(Const.CATEGORY_BIOME, keyAllowStronghold(), allowStronghold);
+			allowStronghold = property.getBoolean(false);
+		}
 	}
 }

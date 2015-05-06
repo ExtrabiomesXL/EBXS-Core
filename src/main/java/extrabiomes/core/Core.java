@@ -82,6 +82,7 @@ public class Core extends ModBase
     }
     
     // Wrapper for EBXS Event handling
+    // TODO: Break this horrible subclass out, possibly into multiple parts
     private class Handler implements IEBXSHandler {
 	    public Logger log() {
 	    	return LOGGER;
@@ -94,9 +95,25 @@ public class Core extends ModBase
 	    			BiomeRegistry.register((IEBXSMod)event.data, ((RegisterEvent)event).apiVersion);
 	    			break;
 	    		default:
-	    			log().warn("Got unsupported event of type "+event.type);
+	    			log().error("Got unsupported event of type %s.", event.type);
 	    	}
 	    }
+
+		// return the requested integer
+		public int queryInt(String query_type, Object param) {
+			switch( query_type ) {
+				case EBXSBus.QUERY_BIOME_ID:
+					if( param instanceof Integer ) {
+						return BiomeRegistry.getBiomeID(((Integer)param).intValue());
+					} else {
+						log().warn("%s requires Integer parameter.", query_type);
+					}
+					break;
+				default:
+					log().error("Got unsupported queryInt of type %s.", query_type);
+			}
+			return -1;
+		}
     }
 
 }

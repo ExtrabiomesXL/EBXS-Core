@@ -65,4 +65,12 @@ public enum EBXSBus {
 	private void queueEvent(EBXSEvent event) {
 		eventQueue.add(event);
 	}
+	
+	//////////----------------------------------------------------- //////////
+	
+	public static final String QUERY_BIOME_ID = "biome_id";
+	
+	public static int queryInt(String query_type, Object param) {
+		return INSTANCE.handler.queryInt(query_type, param);
+	}
 }
