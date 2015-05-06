@@ -1,6 +1,7 @@
 package extrabiomes.core;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 import com.google.common.collect.Sets;
 
@@ -24,5 +25,9 @@ public enum BiomeRegistry {
 					modName, apiVersion, Const.API_VERSION);
 		}
 		return INSTANCE.mods.add(mod);
+	}
+	
+	public Iterator<IEBXSMod> iterator() {
+		return mods.iterator();
 	}
 }

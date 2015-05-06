@@ -21,6 +21,7 @@ import extrabiomes.lib.event.IEBXSHandler;
 import extrabiomes.lib.event.RegisterEvent;
 
 import java.io.File;
+import java.util.Iterator;
 
 @Mod(modid = Version.MOD_ID, name = Version.MOD_NAME, version = Version.VERSION, dependencies = "")
 public class Core
@@ -48,6 +49,11 @@ public class Core
         EBXSBus.INSTANCE.init(new Handler());
         
         /// BiomeHandler.init();
+        
+        Iterator<IEBXSMod> mods = BiomeRegistry.INSTANCE.iterator();
+        while( mods.hasNext() ) {
+        	mods.next().ebxsPreInit();
+        }
     }
 
     @EventHandler
@@ -62,6 +68,11 @@ public class Core
     	/// BiomeHandler.enableBiomes();
 
         LOGGER.info("Loaded version %s", Version.VERSION);
+        
+        Iterator<IEBXSMod> mods = BiomeRegistry.INSTANCE.iterator();
+        while( mods.hasNext() ) {
+        	mods.next().ebxsInit();
+        }
     }
 
     @EventHandler
@@ -69,6 +80,11 @@ public class Core
     {
     	// TODO: activate plugins
     	// TODO: initialize recipes
+    	
+        Iterator<IEBXSMod> mods = BiomeRegistry.INSTANCE.iterator();
+        while( mods.hasNext() ) {
+        	mods.next().ebxsPostInit();
+        }
     }
     
     // Wrapper for EBXS Event handling
