@@ -12,10 +12,10 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeType;
-import extrabiomes.lib.BiomeSettings;
 import extrabiomes.lib.BiomeUtils;
 import extrabiomes.lib.ExtrabiomeGenBase;
 import extrabiomes.lib.IEBXSMod;
+import extrabiomes.lib.settings.BiomeSettings;
 
 public enum BiomeHandler {
 	INSTANCE;

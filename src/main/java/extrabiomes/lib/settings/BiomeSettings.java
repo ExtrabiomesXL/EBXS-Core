@@ -1,9 +1,11 @@
-package extrabiomes.lib;
+package extrabiomes.lib.settings;
 
 import java.util.Locale;
 
 import com.google.common.base.Optional;
 
+import extrabiomes.lib.Const;
+import extrabiomes.lib.ExtrabiomeGenBase;
 import extrabiomes.lib.event.EBXSBus;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;

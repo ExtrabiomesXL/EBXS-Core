@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.common.IWorldGenerator;
+import extrabiomes.lib.settings.BiomeSettings;
 
 public interface IEBXSMod {
 	// Init hooks to be called by core on registered mods
