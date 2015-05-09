@@ -12,6 +12,9 @@ public class BlockSettings {
 	private boolean enabled;
 	private Item	item;
 	
+	public BlockSettings(String name) {
+		this(name, true);
+	}
 	public BlockSettings(String name, boolean enabled) {
 		this.name = name;
 		this.enabled = enabled;
