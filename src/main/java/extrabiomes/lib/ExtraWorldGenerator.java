@@ -13,7 +13,11 @@ import extrabiomes.lib.settings.BiomeSettings;
 
 public abstract class ExtraWorldGenerator implements IWorldGenerator {
 
-	Map<String,WorldGenerator> worldGens = Maps.newHashMap();
+	protected Map<String,WorldGenerator> worldGens = Maps.newHashMap();
+	
+	public void registerGenerator(String type, WorldGenerator gen) {
+		worldGens.put(type, gen);
+	}
 	
 	protected int applyGenerator(String type, World world, int chunkX, int chunkZ, Random rand, int times) {
 		final WorldGenerator gen = worldGens.get(type);
