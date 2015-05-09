@@ -15,6 +15,7 @@ import net.minecraftforge.common.BiomeManager.BiomeType;
 import extrabiomes.lib.BiomeUtils;
 import extrabiomes.lib.ExtrabiomeGenBase;
 import extrabiomes.lib.IEBXSMod;
+import extrabiomes.lib.IEBXSSubMod;
 import extrabiomes.lib.settings.BiomeSettings;
 
 public enum BiomeHandler {
@@ -23,7 +24,8 @@ public enum BiomeHandler {
 	public static void init() throws Exception {
 		Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
 		while( mods.hasNext() ) {
-			final List<BiomeSettings> settingsList = mods.next().getBiomeSettings();
+			final IEBXSSubMod submod = (IEBXSSubMod)(mods.next());
+			final List<BiomeSettings> settingsList = submod.getBiomeSettings();
 			for( final BiomeSettings settings : settingsList ) {
 				if( settings.isEnabled() && settings.getID() > 0 ) {
 					BiomeUtils.createBiome(settings);
@@ -67,7 +69,8 @@ public enum BiomeHandler {
 		final Set<WorldType> worldTypes = BiomeUtils.discoverWorldTypes();
 		Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
 		while( mods.hasNext() ) {
-			final List<BiomeSettings> settingsList = mods.next().getBiomeSettings();
+			final IEBXSSubMod submod = (IEBXSSubMod)(mods.next());
+			final List<BiomeSettings> settingsList = submod.getBiomeSettings();
 			for( final BiomeSettings settings : settingsList ) {
 				final Optional<? extends BiomeGenBase> biomeOpt = settings.getBiome();
 				if( settings.isEnabled() && biomeOpt.isPresent() ) {
@@ -95,7 +98,8 @@ public enum BiomeHandler {
 	public static void registerWorldGenerators() {
 		Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
 		while( mods.hasNext() ) {
-			final List<Class <?extends IWorldGenerator>> generators = mods.next().getWorldGenerators();
+			final IEBXSSubMod submod = (IEBXSSubMod)(mods.next());
+			final List<Class <?extends IWorldGenerator>> generators = submod.getWorldGenerators();
 			for( final Class<?extends IWorldGenerator> clazz : generators ) {
 				try {
 					final IWorldGenerator generator = clazz.newInstance();

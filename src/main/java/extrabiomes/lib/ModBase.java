@@ -9,7 +9,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Configuration;
 
-public abstract class ModBase {
+public abstract class ModBase implements IEBXSMod {
     public static final Minecraft MC	= Minecraft.getMinecraft();
     public static final Boolean   DEV   = Boolean.parseBoolean( System.getProperty("development", "false") );
 
@@ -29,4 +29,14 @@ public abstract class ModBase {
 
         Config  = new Configuration( new File(BaseDir, getClass().getSimpleName().toLowerCase() + ".cfg") );
     }
+    
+    // terrible init hook race condition management
+    private boolean ranPreInit = false;
+	public void ebxsPreInit() {
+		ranPreInit = true;
+	}
+	public void ebxsInit() {
+		if( !ranPreInit ) ebxsPreInit();
+	}
+	public void ebxsPostInit() {}
 }
