@@ -2,12 +2,13 @@ package extrabiomes.lib;
 
 import java.io.File;
 
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.config.Configuration;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.config.Configuration;
 
 public abstract class ModBase implements IEBXSMod {
     public static final Minecraft MC	= Minecraft.getMinecraft();

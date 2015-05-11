@@ -2,12 +2,9 @@ package extrabiomes.core;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
-import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 
 import cpw.mods.fml.common.IWorldGenerator;

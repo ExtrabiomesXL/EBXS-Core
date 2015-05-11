@@ -1,10 +1,9 @@
 package extrabiomes.lib.settings;
 
-import extrabiomes.lib.Const;
-import extrabiomes.lib.event.EBXSBus;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import extrabiomes.lib.Const;
 
 public class BlockSettings {
 	public final String name;

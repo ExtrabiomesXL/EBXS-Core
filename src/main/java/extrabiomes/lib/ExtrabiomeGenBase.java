@@ -1,8 +1,8 @@
 package extrabiomes.lib;
 
-import extrabiomes.lib.settings.BiomeSettings;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary.Type;
+import extrabiomes.lib.settings.BiomeSettings;
 
 public abstract class ExtrabiomeGenBase extends BiomeGenBase {
 	protected BiomeSettings settings;

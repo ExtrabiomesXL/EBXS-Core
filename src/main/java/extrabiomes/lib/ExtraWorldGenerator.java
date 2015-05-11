@@ -3,13 +3,14 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+
 import cpw.mods.fml.common.IWorldGenerator;
 import extrabiomes.lib.settings.BiomeSettings;
 

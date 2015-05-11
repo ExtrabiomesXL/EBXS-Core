@@ -7,8 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Lists;
 
-import extrabiomes.lib.IEBXSMod;
-
 public enum EBXSBus {
 	INSTANCE;
 	

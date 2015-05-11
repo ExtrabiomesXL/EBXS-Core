@@ -4,14 +4,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.google.common.base.Optional;
-
-import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeType;
+
+import com.google.common.base.Optional;
+
+import cpw.mods.fml.common.IWorldGenerator;
 import extrabiomes.lib.BiomeUtils;
 import extrabiomes.lib.ExtrabiomeGenBase;
 import extrabiomes.lib.IEBXSMod;

@@ -1,31 +1,22 @@
 package extrabiomes.core;
 
-import cpw.mods.fml.common.IWorldGenerator;
+import java.util.Iterator;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import net.minecraft.client.Minecraft;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.common.config.Configuration;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import extrabiomes.lib.Const;
 import extrabiomes.lib.IEBXSMod;
 import extrabiomes.lib.ModBase;
 import extrabiomes.lib.event.EBXSBus;
 import extrabiomes.lib.event.EBXSEvent;
 import extrabiomes.lib.event.IEBXSHandler;
 import extrabiomes.lib.event.RegisterEvent;
-import extrabiomes.lib.settings.BiomeSettings;
-
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
 
 @Mod(modid = Version.MOD_ID, name = Version.MOD_NAME, version = Version.VERSION, dependencies = "")
 public class Core extends ModBase
