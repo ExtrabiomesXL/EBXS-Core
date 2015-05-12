@@ -12,6 +12,7 @@ import com.google.common.collect.ImmutableSet;
 import extrabiomes.lib.event.EBXSBus;
 import extrabiomes.lib.event.RegisterEvent;
 import extrabiomes.lib.settings.BiomeSettings;
+import extrabiomes.lib.worldgen.ExtrabiomeGenBase;
 
 public abstract class BiomeUtils {
 	

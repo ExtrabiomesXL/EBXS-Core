@@ -14,10 +14,10 @@ import com.google.common.base.Optional;
 
 import cpw.mods.fml.common.IWorldGenerator;
 import extrabiomes.lib.BiomeUtils;
-import extrabiomes.lib.ExtrabiomeGenBase;
 import extrabiomes.lib.IEBXSMod;
 import extrabiomes.lib.IEBXSSubMod;
 import extrabiomes.lib.settings.BiomeSettings;
+import extrabiomes.lib.worldgen.ExtrabiomeGenBase;
 
 public enum BiomeHandler {
 	INSTANCE;

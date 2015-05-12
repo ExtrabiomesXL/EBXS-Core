@@ -1,4 +1,4 @@
-package extrabiomes.lib;
+package extrabiomes.lib.worldgen;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary.Type;

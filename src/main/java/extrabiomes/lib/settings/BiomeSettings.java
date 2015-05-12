@@ -6,8 +6,8 @@ import net.minecraftforge.common.config.Property;
 import com.google.common.base.Optional;
 
 import extrabiomes.lib.Const;
-import extrabiomes.lib.ExtrabiomeGenBase;
 import extrabiomes.lib.event.EBXSBus;
+import extrabiomes.lib.worldgen.ExtrabiomeGenBase;
 
 public class BiomeSettings {
 	public final String name;

@@ -1,4 +1,4 @@
-package extrabiomes.lib;
+package extrabiomes.lib.worldgen;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
