@@ -92,11 +92,14 @@ public class WorldGenExtraTree extends WorldGenAbstractTree {
 	}
 
 	protected void growLeaves(World world, Random rand, int x, int y, int z, int height) {
+		final Block leaf = Block.getBlockFromItem(leaves.getItem());
+		final int leafMeta = leaves.getItemDamage();
+		
 		for( int _y = y - canopy_height + height; _y <= y + height; ++_y ) {
 			final int canopyRow = _y - (y+height);
 			final int radius = canopy_extra_radius + 1 - (canopyRow>>1);
 			
-			for( int _x = x - radius; _x <= _x + radius; ++_x ) {
+			for( int _x = x - radius; _x <= x + radius; ++_x ) {
 				final int xFromTrunk = _x - x;
 				for( int _z = z - radius; _z <= z + radius; ++_z ) {
 					final int zFromTrunk = _z - z;
@@ -104,7 +107,7 @@ public class WorldGenExtraTree extends WorldGenAbstractTree {
 					// NB: the rand here is weird and easy to miss
 					if( (Math.abs(xFromTrunk) != radius || Math.abs(zFromTrunk) != radius || rand.nextInt(2) != 0 && canopyRow != 0)
 							&& (block == null || block.canBeReplacedByLeaves(world, _x, _y, _z)) ) {
-						
+						setBlockAndNotifyAdequately(world, _x, _y, _z, leaf, leafMeta);
 					}
 				}
 			}
