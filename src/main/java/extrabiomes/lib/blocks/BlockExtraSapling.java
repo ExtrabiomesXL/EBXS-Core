@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import extrabiomes.lib.items.IExtraItemType;
@@ -22,6 +24,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 
 public abstract class BlockExtraSapling extends BlockFlower implements IExtraBlock {
 
@@ -189,4 +192,47 @@ public abstract class BlockExtraSapling extends BlockFlower implements IExtraBlo
 	}
 	
 	// TODO: add support for tooltips
+	
+	///// ----------
+	
+	public class BonemealEventHandler {
+		public static final double GROW_CHANCE = 0.45D;
+		
+		private final BlockExtraSapling sapling;
+		public BonemealEventHandler(BlockExtraSapling sapling) {
+			this.sapling = sapling;
+		}
+		
+		@SubscribeEvent
+		public void onBonemealEvent(BonemealEvent e) {
+			if( e.getResult() == Result.DEFAULT && e.block.equals(sapling) ) {
+				if( !e.world.isRemote ) {
+					if( e.world.rand.nextFloat() <= GROW_CHANCE ) {
+						sapling.markOrGrowMarked(e.world, e.x, e.y, e.z, e.world.rand);
+					}
+					e.setResult(Result.ALLOW);
+				}
+			}
+		}
+	}
+	
+	///// ----------
+	
+	public class FuelHandler implements IFuelHandler {
+		public static final int BURN_VALUE = 100;	// standard sapling fuel value
+		
+		private final BlockExtraSapling sapling;
+		public FuelHandler(BlockExtraSapling sapling) {
+			this.sapling = sapling;
+		}
+		
+		@Override
+		public int getBurnTime(ItemStack fuel) {
+			if( fuel.getItem().equals(Item.getItemFromBlock(sapling)) ) {
+				return BURN_VALUE;
+			} else {
+				return 0;
+			}
+		}
+	}
 }
