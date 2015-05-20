@@ -1,9 +1,13 @@
 package extrabiomes.lib.settings;
 
+import java.util.List;
+
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
 
 import extrabiomes.lib.Const;
 import extrabiomes.lib.event.EBXSBus;
@@ -23,7 +27,7 @@ public class BiomeSettings {
 	
 	private final Optional<? extends Class<? extends ExtrabiomeGenBase>> biomeClass;
 	private Optional<? extends ExtrabiomeGenBase> biome = Optional.absent();
-	
+		
 	public enum Weights {
 		NONE(0), LIGHT(5), NORMAL(10), HEAVY(20);
 
