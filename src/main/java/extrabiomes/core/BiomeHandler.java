@@ -105,7 +105,7 @@ public enum BiomeHandler {
 				try {
 					final IWorldGenerator generator = clazz.newInstance();
 					BiomeRegistry.addWorldGenerator( generator );
-				} catch (InstantiationException | IllegalAccessException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
