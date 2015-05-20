@@ -115,7 +115,7 @@ public class WorldGenExtraTree extends WorldGenAbstractTree {
 	}
 
 	protected void growTrunk(World world, int x, int y, int z, int height) {
-		for( int dy = height-1; dy > 0; --dy ) {
+		for( int dy = height-1; dy >= 0; --dy ) {
 			final int _y = y + dy;
 			final Block block = world.getBlock(x, _y, z);
 			if( block.isReplaceable(world, x, _y, z) || block.isLeaves(world, x, _y, z) ) {
