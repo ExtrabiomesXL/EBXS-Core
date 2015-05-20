@@ -93,27 +93,23 @@ public class Core extends ModBase
 	    
 	    // Semi-terrible stub handler implementation for now
 	    public void receive(EBXSEvent event) {
-	    	switch( event.type ) {
-	    		case "register":
-	    			BiomeRegistry.register((IEBXSMod)event.data, ((RegisterEvent)event).apiVersion);
-	    			break;
-	    		default:
-	    			log().error("Got unsupported event of type %s.", event.type);
-	    	}
+    		if( event.type.equals("register") ) {
+    			BiomeRegistry.register((IEBXSMod)event.data, ((RegisterEvent)event).apiVersion);
+    		} else {
+    			log().error("Got unsupported event of type %s.", event.type);
+    		}
 	    }
 
 		// return the requested integer
 		public int queryInt(String query_type, Object param) {
-			switch( query_type ) {
-				case EBXSBus.QUERY_BIOME_ID:
-					if( param instanceof Integer ) {
-						return BiomeRegistry.getBiomeID(((Integer)param).intValue());
-					} else {
-						log().warn("%s requires Integer parameter.", query_type);
-					}
-					break;
-				default:
-					log().error("Got unsupported queryInt of type %s.", query_type);
+			if( query_type.equals(EBXSBus.QUERY_BIOME_ID) ) {
+				if( param instanceof Integer ) {
+					return BiomeRegistry.getBiomeID(((Integer)param).intValue());
+				} else {
+					log().warn("%s requires Integer parameter.", query_type);
+				}
+			} else {
+				log().error("Got unsupported queryInt of type %s.", query_type);
 			}
 			return -1;
 		}
