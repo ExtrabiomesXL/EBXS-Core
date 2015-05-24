@@ -9,9 +9,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class ModBase implements IEBXSMod {
-    public static final Minecraft MC	= Minecraft.getMinecraft();
     public static final Boolean   DEV   = Boolean.parseBoolean( System.getProperty("development", "false") );
 
     public static Logger          LOGGER;
