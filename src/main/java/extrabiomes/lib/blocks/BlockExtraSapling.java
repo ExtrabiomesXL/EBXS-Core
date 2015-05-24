@@ -98,7 +98,7 @@ public abstract class BlockExtraSapling extends BlockFlower implements IExtraBlo
 	
 	// TODO: make this more configurable, add a soil registry 
 	protected boolean canThisPlantGrowOnThisBlock(Block block) {
-		return  block == Blocks.grass || block == Blocks.dirt || block == Blocks.farmland || block.isFlowerPot();
+		return  block == Blocks.grass || block == Blocks.dirt || block == Blocks.farmland || block == Blocks.flower_pot;
 	}
 	
 	private static boolean isEnoughLightToGrow(World world, int x, int y, int z) {
