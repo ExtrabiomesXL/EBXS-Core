@@ -86,6 +86,8 @@ public class Core extends ModBase
         	mods.next().ebxsPostInit();
         }
         
+        // TODO: handle crossgen requests
+        
         if( DEV ) {
 	        // dump the full list of registered biomes for debug purposes
 	        BiomeRegistry.dump();

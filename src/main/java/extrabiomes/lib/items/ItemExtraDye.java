@@ -55,6 +55,7 @@ public class ItemExtraDye extends Item {
 		super();
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
+        this.setUnlocalizedName(Const.PREFIX_LONG+".dye");
 	}
 
 	public void init() {
