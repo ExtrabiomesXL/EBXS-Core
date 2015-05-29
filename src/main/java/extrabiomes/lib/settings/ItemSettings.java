@@ -9,6 +9,9 @@ public class ItemSettings {
 	
 	private boolean enabled;
 	
+	public ItemSettings(String name) {
+		this(name, true);
+	}
 	public ItemSettings(String name, boolean enabled) {
 		this.name = name;
 		this.enabled = enabled;

@@ -11,6 +11,8 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import extrabiomes.core.stuff.BlockCollection;
+import extrabiomes.core.stuff.ItemCollection;
 import extrabiomes.lib.IEBXSMod;
 import extrabiomes.lib.ModBase;
 import extrabiomes.lib.event.EBXSBus;
@@ -35,7 +37,11 @@ public class Core extends ModBase
     {
     	basePreInit(event);
         EBXSBus.INSTANCE.init(new Handler());
-                
+        
+        BlockCollection.init();
+        ItemCollection.init();
+        ConfigurationHandler.init(Config);
+        
         Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
         while( mods.hasNext() ) {
         	mods.next().ebxsPreInit();
