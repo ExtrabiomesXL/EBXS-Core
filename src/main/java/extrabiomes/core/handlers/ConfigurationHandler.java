@@ -1,4 +1,4 @@
-package extrabiomes.core;
+package extrabiomes.core.handlers;
 
 import net.minecraftforge.common.config.Configuration;
 import extrabiomes.core.stuff.BlockCollection;

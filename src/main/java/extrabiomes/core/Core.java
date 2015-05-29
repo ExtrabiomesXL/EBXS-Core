@@ -11,6 +11,9 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import extrabiomes.core.handlers.BlockHandler;
+import extrabiomes.core.handlers.ConfigurationHandler;
+import extrabiomes.core.handlers.ItemHandler;
 import extrabiomes.core.stuff.BlockCollection;
 import extrabiomes.core.stuff.ItemCollection;
 import extrabiomes.lib.IEBXSMod;
@@ -51,11 +54,10 @@ public class Core extends ModBase
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	// TODO: register vanilla event handler
-        //MinecraftForge.EVENT_BUS.register(this);
-        //FMLCommonHandler.instance().bus().register(this);
-        //LOGGER.debug("Registered events");
-    
+    	// block/item handlers
+    	ItemHandler.init();
+    	BlockHandler.init();
+    	
     	// spin up our biome handler
         try {
 			BiomeHandler.init();
