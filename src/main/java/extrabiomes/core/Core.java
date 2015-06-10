@@ -14,6 +14,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import extrabiomes.core.handlers.BlockHandler;
 import extrabiomes.core.handlers.ConfigurationHandler;
 import extrabiomes.core.handlers.ItemHandler;
+import extrabiomes.core.handlers.RecipeHandler;
 import extrabiomes.core.stuff.BlockCollection;
 import extrabiomes.core.stuff.ItemCollection;
 import extrabiomes.lib.IEBXSMod;
@@ -79,7 +80,8 @@ public class Core extends ModBase
     public void postInit(FMLPostInitializationEvent event)
     {
     	// TODO: initialize plugins
-    	// TODO: initialize recipes
+
+    	RecipeHandler.init();
     	
         Iterator<IEBXSMod> mods = BiomeRegistry.iterator();
         while( mods.hasNext() ) {

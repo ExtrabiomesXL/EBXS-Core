@@ -69,6 +69,10 @@ public class ItemExtraDye extends Item {
 		 * OreDictionary.initVanillaEntries();
 		 */
 	}
+	
+	public static ItemStack getDye(Color color) {
+		return dyes.get(color);
+	}
 
 	/**
 	 * Returns true if the item can be used on the given entity, e.g. shears on

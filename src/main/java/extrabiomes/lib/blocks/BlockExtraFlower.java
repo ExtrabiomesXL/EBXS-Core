@@ -3,6 +3,8 @@ package extrabiomes.lib.blocks;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,6 +19,7 @@ import extrabiomes.lib.blocks.IBlockTypeFlower;
 import extrabiomes.lib.blocks.IExtraBlock;
 
 public class BlockExtraFlower extends BlockFlower implements IExtraBlock {
+	private static final List<BlockExtraFlower>	allFlowers = Lists.newArrayList();
 	
 	private final ModBase 			parentMod;
 	public final IBlockTypeFlower[]	blockTypes;
@@ -34,6 +37,12 @@ public class BlockExtraFlower extends BlockFlower implements IExtraBlock {
 		setStepSound(Block.soundTypeGrass);
 		// TODO: add our own tab again
 		setCreativeTab(CreativeTabs.tabDecorations);
+		
+		allFlowers.add(this);
+	}
+	
+	public static List<BlockExtraFlower> getAllFlowers() {
+		return allFlowers;
 	}
 	
 	@Override
