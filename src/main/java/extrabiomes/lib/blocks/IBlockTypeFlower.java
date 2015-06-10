@@ -6,12 +6,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public interface IBlockTypeFlower {
-	public final int	metadata	= 0;
-	public final int	weight		= 1;
-	public final int	color		= 0;
-	
-	public final String	texture		= "";
-	
+	public int getMeta();
+	public int getWeight();
+	public int getColor();
+		
 	public String name();
 			
 	@SideOnly(Side.CLIENT)

@@ -49,7 +49,7 @@ public class BlockExtraFlower extends BlockFlower implements IExtraBlock {
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item id, CreativeTabs tab, List itemList) {
 		for( final IBlockTypeFlower type : blockTypes ) {
-			itemList.add(new ItemStack(this, 1, type.metadata));
+			itemList.add(new ItemStack(this, 1, type.getMeta()));
 		}
 	}
 	
@@ -60,7 +60,7 @@ public class BlockExtraFlower extends BlockFlower implements IExtraBlock {
 		for( final IBlockTypeFlower type : blockTypes ) {
 			final IIcon icon = type.registerIcon(iconRegister);
 			if( icon == null ) {
-				parentMod.LOGGER.warn("No icon found for %s (%d)", type, type.metadata);
+				parentMod.LOGGER.warn("No icon found for %s (%d)", type, type.getMeta());
 			} else {
 				parentMod.LOGGER.debug("%s: %s = %s", this.getClass().getSimpleName(), type, icon);
 			}

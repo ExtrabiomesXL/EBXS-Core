@@ -34,7 +34,8 @@ public class RecipeHandler {
 		for( BlockExtraFlower block : BlockExtraFlower.getAllFlowers() ) {
 			for( IBlockTypeFlower type : block.blockTypes ) {
 				ItemStack dye;
-				switch( type.color ) {
+				int color = type.getColor();
+				switch( color ) {
 					case -1:
 						continue;
 					case 0:
@@ -50,14 +51,14 @@ public class RecipeHandler {
 						dye = ItemExtraDye.getDye(ItemExtraDye.Color.WHITE);
 						break;
 					default:
-						if( vanillaDyes.containsKey(type.color) ) {
-							dye = vanillaDyes.get(type.color);
+						if( vanillaDyes.containsKey(color) ) {
+							dye = vanillaDyes.get(color);
 						} else {
-							dye = new ItemStack(Items.dye, 1, type.color);
-							vanillaDyes.put(type.color, dye);
+							dye = new ItemStack(Items.dye, 1, color);
+							vanillaDyes.put(color, dye);
 						}
 				}
-				ItemStack item = new ItemStack(block, 1, type.metadata);
+				ItemStack item = new ItemStack(block, 1, type.getMeta());
 				IRecipe recipe = new ShapelessOreRecipe( dye, item );
 				addRecipe(recipe);
 			}
