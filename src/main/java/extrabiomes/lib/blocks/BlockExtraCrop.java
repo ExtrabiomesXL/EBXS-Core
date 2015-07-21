@@ -41,9 +41,9 @@ public class BlockExtraCrop extends BlockFlower implements IExtraBlock {
 	protected static final int	MIN_FERTILIZER		= 2;
 	protected static final int	MAX_FERTILIZER		= 5;
 	
-	protected static final int	RENDER_TYPE_CROP	= 6;
-	protected static final int	RENDER_TYPE_FLOWER	= 1;
-	protected static final int	DEFAULT_RENDER_TYPE	= RENDER_TYPE_CROP;
+	public static final int		RENDER_TYPE_CROP	= 6;
+	public static final int		RENDER_TYPE_FLOWER	= 1;
+	public static final int		DEFAULT_RENDER_TYPE	= RENDER_TYPE_CROP;
 
 	public BlockExtraCrop(ModBase parentMod, String locPrefix, IBlockTypeCrop blockType) {
 		super(0);
@@ -97,7 +97,7 @@ public class BlockExtraCrop extends BlockFlower implements IExtraBlock {
 
 			IIcons.add(k, icon);
 		}
-		cropType.setStageIIcons(IIcons);
+		cropType.setStageIcons(IIcons);
 
 	}
 
@@ -110,7 +110,7 @@ public class BlockExtraCrop extends BlockFlower implements IExtraBlock {
 	public IIcon getIcon(int side, int metadata) {
 		if (metadata > MAX_GROWTH_STAGE) metadata = MAX_GROWTH_STAGE;
 		try {
-			return cropType.getStageIIcon(metadata);
+			return cropType.getStageIcon(metadata);
 		} catch (Exception e) {
 			parentMod.LOGGER.warn("Unable to get stage IIcon for " + cropType.name()
 					+ " @ " + metadata);

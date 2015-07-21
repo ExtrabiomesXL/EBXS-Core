@@ -14,8 +14,8 @@ public interface IBlockTypeCrop {
 	
 	public String name();
 	
-	public IIcon getStageIIcon(int stage);
-	public void setStageIIcons(ArrayList<IIcon> IIcons);
+	public IIcon getStageIcon(int stage);
+	public void setStageIcons(ArrayList<IIcon> icons);
 	
 	public ItemStack getSeedItem();
 	public Item getCropItem();
