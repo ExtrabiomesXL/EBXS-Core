@@ -3,6 +3,8 @@ package extrabiomes.lib;
 import java.io.File;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.LogManager;
@@ -41,4 +43,7 @@ public abstract class ModBase implements IEBXSMod {
 		if( !ranPreInit ) ebxsPreInit();
 	}
 	public void ebxsPostInit() {}
+	
+	@SideOnly(Side.CLIENT)
+	public abstract IIcon registerIcon(IIconRegister iconRegister, String texture);
 }

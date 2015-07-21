@@ -11,4 +11,5 @@ public abstract class Version {
 	public static final String	API_VERSION		= Const.API_VERSION;
 
 	public static final String	CHANNEL			= MOD_ID;
+	public static final String	TEXTURE_PATH	= MOD_ID.toLowerCase(Locale.ENGLISH) + ":";
 }

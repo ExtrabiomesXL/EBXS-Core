@@ -2,6 +2,9 @@ package extrabiomes.core;
 
 import java.util.Iterator;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,6 +14,8 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import extrabiomes.core.handlers.BlockHandler;
 import extrabiomes.core.handlers.ConfigurationHandler;
 import extrabiomes.core.handlers.ItemHandler;
@@ -95,6 +100,12 @@ public class Core extends ModBase
 	        BiomeRegistry.dump();
         }
     }
+    
+	@SideOnly(Side.CLIENT)
+	public IIcon registerIcon(IIconRegister iconRegister, String texture) {
+		IIcon icon = iconRegister.registerIcon(Version.TEXTURE_PATH + texture);
+		return icon;
+	}
     
     // Wrapper for EBXS Event handling
     // TODO: Break this horrible subclass out, possibly into multiple parts

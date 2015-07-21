@@ -58,10 +58,11 @@ public class BlockExtraFlower extends BlockFlower implements IExtraBlock {
 	public void registerBlockIcons(IIconRegister iconRegister) {
 		parentMod.LOGGER.debug(this.getClass().getSimpleName() + ": registerIcons");
 		for( final IBlockTypeFlower type : blockTypes ) {
-			final IIcon icon = type.registerIcon(iconRegister);
+			final IIcon icon = parentMod.registerIcon(iconRegister, type.getTexture());
 			if( icon == null ) {
 				parentMod.LOGGER.warn("No icon found for %s (%d)", type, type.getMeta());
 			} else {
+				type.setIcon(icon);
 				parentMod.LOGGER.debug("%s: %s = %s", this.getClass().getSimpleName(), type, icon);
 			}
 		}
