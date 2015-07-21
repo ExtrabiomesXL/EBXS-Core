@@ -8,6 +8,10 @@ import net.minecraft.util.IIcon;
 
 public interface IBlockTypeCrop {
 
+	public enum CropType {
+		NORMAL, REGROW;
+	}
+	
 	public String name();
 	
 	public IIcon getStageIIcon(int stage);
@@ -20,5 +24,7 @@ public interface IBlockTypeCrop {
 	public void setCropItem(Item crop);
     
 	public int getRenderType();
+	
+	public CropType getCropType();
 	
 }

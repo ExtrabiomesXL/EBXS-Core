@@ -11,6 +11,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -22,6 +24,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import extrabiomes.lib.ModBase;
+import extrabiomes.lib.blocks.IBlockTypeCrop.CropType;
 import extrabiomes.lib.blocks.IBlockTypeFlower;
 import extrabiomes.lib.blocks.IExtraBlock;
 
@@ -32,6 +35,8 @@ public class BlockExtraCrop extends BlockFlower implements IExtraBlock {
 	public final IBlockTypeCrop		cropType;
 	
 	public static final int		MAX_GROWTH_STAGE	= 7;
+	public static final int		REGROW_STAGE		= 4;
+
 	protected static final int	MIN_LIGHT_LEVEL		= 9;
 	protected static final int	MIN_FERTILIZER		= 2;
 	protected static final int	MAX_FERTILIZER		= 5;
@@ -163,6 +168,66 @@ public class BlockExtraCrop extends BlockFlower implements IExtraBlock {
 		fertilize(world, x, y, z);
 	}
 	
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z,
+			EntityPlayer player, int par6, float par7, float par8, float par9) {
+		return doHarvest(world, x, y, z, player);
+	}
+
+	@Override
+	public void onBlockClicked(World world, int x, int y, int z,
+			EntityPlayer player) {
+		doHarvest(world, x, y, z, player);
+	}
+
+	/**
+	 * Replace a regrowable crop block at half growth.
+	 */
+	public void doRegrow(World world, int x, int y, int z, int meta) {
+		final int newMeta = meta > REGROW_STAGE ? REGROW_STAGE : meta;
+		world.setBlock(x, y, z, this, newMeta, 3);
+	}
+	
+	/**
+	 * Increase hardness for grown crops so they don't break on accident.
+	 */
+	@Override
+	public float getBlockHardness(World world, int x, int y, int z) {
+		if (world.getBlockMetadata(x, y, z) >= REGROW_STAGE)
+			return 0.5f;
+		return this.blockHardness;
+	}
+
+	/**
+	 * Handle harvesting this crop if it is ready.
+	 * 
+	 * @return False if a server chose not to harvest.
+	 */
+	public boolean doHarvest(World world, int x, int y, int z,
+			EntityPlayer player) {
+		if (world.isRemote) return true;
+
+		if( cropType.getCropType() == CropType.REGROW ) {
+			int growth = world.getBlockMetadata(x, y, z);
+			if (growth >= MAX_GROWTH_STAGE) {
+				EntityItem drop = new EntityItem(world, player.posX,
+						player.posY - 1.0, player.posZ, new ItemStack(
+								this.getCropItem(), 1, 0));
+				// spawn the drop, then force collide it with the player
+				world.spawnEntityInWorld(drop);
+				drop.onCollideWithPlayer(player);
+	
+				// revert the meta on the block to our regrow stage
+				doRegrow(world, x, y, z, growth);
+				return true;
+			}
+		} else {
+			// TODO: handle replanting for "NORMAL" crops
+		}
+
+		return false;
+	}
+	
 	/**
 	 * Gets the growth rate for the crop. Setup to encourage rows by halving growth rate if there is diagonals, crops on
 	 * different sides that aren't opposing, and by adding growth for every crop next to this one (and for crop below
@@ -213,17 +278,25 @@ public class BlockExtraCrop extends BlockFlower implements IExtraBlock {
 		return rate;
 	}
 	
-	/**
-	 * Currently borrowed directly from vanilla crops, will improve.
-	 */
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
-		ArrayList<ItemStack> ret = super.getDrops(world, x, y, z, metadata, fortune);
-
-		if (metadata >= MAX_GROWTH_STAGE) {
-			for (int n = 0; n < 3 + fortune; n++) {
-				if (world.rand.nextInt(15) <= metadata) {
-					ret.add(this.getSeedItem());
+		final ArrayList<ItemStack> ret;
+		
+		if( cropType.getCropType() == CropType.REGROW ) {
+			ret = new ArrayList<ItemStack>();
+			// for now, regrowers only ever produce one item
+			if (metadata >= MAX_GROWTH_STAGE) {
+				ret.add(new ItemStack(this.getCropItem(), 1, 0));
+			} else {
+				ret.add(this.getSeedItem());
+			}
+		} else {
+			ret = super.getDrops(world, x, y, z, metadata, fortune);			
+			if (metadata >= MAX_GROWTH_STAGE) {
+				for (int n = 0; n < 3 + fortune; n++) {
+					if (world.rand.nextInt(15) <= metadata) {
+						ret.add(this.getSeedItem());
+					}
 				}
 			}
 		}
