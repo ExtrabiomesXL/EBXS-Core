@@ -1,0 +1,8 @@
+image: java:latest
+
+job1:
+  script:
+    - ./gradlew setupCIWorkspace build
+  tags:
+    - docker
+    - java
